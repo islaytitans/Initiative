@@ -1,0 +1,7 @@
+{
+  "name": "Initiative",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
