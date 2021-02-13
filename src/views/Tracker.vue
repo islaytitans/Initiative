@@ -1,12 +1,26 @@
 <template>
   <ion-list>
-    <ion-list-header>Roll for Initiative</ion-list-header>
-    <ion-item v-for="(creature, index) in getCreatures()" :key="index">
-      <ion-icon :icon="chevronForwardOutline" />
-      <ion-label>{{ creature.initiative }}</ion-label>
+    <ion-list-header>
+      Roll for Initiative
+      <ion-button>
+        <ion-icon :icon="addOutline" slot="icon-only" />
+      </ion-button>
+    </ion-list-header>
 
-      <ion-icon :icon="getCreatureIcon(creature.isPlayer, creature.isDead)" />
-      <ion-label>
+    <ion-item v-for="(creature, index) in getCreatures()" :key="index">
+      <ion-icon
+        :icon="chevronForwardOutline"
+        :color="getStatusColor(creature.isDead)"
+      />
+      <ion-label :color="getStatusColor(creature.isDead)">{{
+        creature.initiative
+      }}</ion-label>
+
+      <ion-icon
+        :icon="getCreatureIcon(creature.isPlayer, creature.isDead)"
+        :color="getStatusColor(creature.isDead)"
+      />
+      <ion-label :color="getStatusColor(creature.isDead)">
         <h3>{{ creature.name }}</h3>
         <p>
           <ion-icon :icon="shieldOutline" />
@@ -14,9 +28,10 @@
         </p>
       </ion-label>
 
-      <ion-icon :icon="heartOutline" />
-      <ion-label>
-        {{ creature.isDead ? 0 : creature.hitPoints }} / {{ creature.hitPoints }}
+      <ion-icon :icon="heartOutline" :color="getStatusColor(creature.isDead)" />
+      <ion-label :color="getStatusColor(creature.isDead)">
+        {{ creature.isDead ? 0 : creature.hitPoints }} /
+        {{ creature.hitPoints }}
       </ion-label>
     </ion-item>
   </ion-list>
@@ -24,7 +39,14 @@
 
 
 <script lang="ts">
-import { IonListHeader, IonList, IonItem, IonLabel, IonIcon } from "@ionic/vue";
+import {
+  IonListHeader,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonIcon,
+  IonButton,
+} from "@ionic/vue";
 import {
   heartOutline,
   shieldOutline,
@@ -32,6 +54,7 @@ import {
   bodyOutline,
   pawOutline,
   skullOutline,
+  addOutline,
 } from "ionicons/icons";
 import Creature from "@/types/Creature.ts";
 
@@ -43,6 +66,7 @@ export default {
     IonItem,
     IonLabel,
     IonIcon,
+    IonButton,
   },
   setup() {
     const creatures: Creature[] = [
@@ -94,12 +118,18 @@ export default {
       return creatures.sort((a, b) => b.initiative - a.initiative);
     }
 
+    function getStatusColor(isDead: boolean) {
+      return isDead ? 'danger' : '';
+    }
+
     return {
       getCreatureIcon,
       getCreatures,
+      getStatusColor,
       heartOutline,
       shieldOutline,
-      chevronForwardOutline
+      chevronForwardOutline,
+      addOutline,
     };
   },
 };
