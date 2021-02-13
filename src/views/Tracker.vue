@@ -1,8 +1,15 @@
 <template>
+    <ion-modal
+      :is-open="isAddCreatureOpenRef"
+      css-class="my-custom-class"
+      @onDidDismiss="setAddCreatureOpen(false)"
+  >
+    <AddCreature :data="data" @closeEvent="setAddCreatureOpen(false)"></AddCreature>
+  </ion-modal>
   <ion-list>
     <ion-list-header>
       Roll for Initiative
-      <ion-button @click="openAddCreature">
+      <ion-button @click="setAddCreatureOpen(true)">
         <ion-icon :icon="addOutline" slot="icon-only" />
       </ion-button>
     </ion-list-header>
@@ -41,6 +48,7 @@
 
 
 <script lang="ts">
+import { defineComponent, ref } from "vue";
 import {
   IonListHeader,
   IonList,
@@ -48,7 +56,7 @@ import {
   IonLabel,
   IonIcon,
   IonButton,
-  modalController
+  IonModal
 } from "@ionic/vue";
 import {
   heartOutline,
@@ -62,7 +70,7 @@ import {
 import AddCreature from '@/views/AddCreature.vue';
 import Creature from "@/types/Creature.ts";
 
-export default {
+export default defineComponent({
   name: "Tracker",
   components: {
     IonList,
@@ -70,7 +78,9 @@ export default {
     IonItem,
     IonLabel,
     IonIcon,
-    IonButton
+    IonButton,
+    IonModal,
+    AddCreature
   },
   setup() {
     const creatures: Creature[] = [
@@ -126,30 +136,22 @@ export default {
       return isDead ? 'danger' : '';
     }
 
-    async function openAddCreature() {
-      const modal = await modalController
-        .create({
-          component: AddCreature,
-          cssClass: 'my-custom-class',
-          componentProps: {
-            title: 'New Title'
-          },
-        })
-      return modal.present();
-    }
+    const isAddCreatureOpenRef = ref(false);
+    const setAddCreatureOpen = (state: boolean) => isAddCreatureOpenRef.value = state;
 
     return {
       getCreatureIcon,
       getCreatures,
       getStatusColor,
-      openAddCreature,
       heartOutline,
       shieldOutline,
       chevronForwardOutline,
       addOutline,
+      isAddCreatureOpenRef,
+      setAddCreatureOpen
     };
   },
-};
+});
 </script>
 
 <style scoped>
