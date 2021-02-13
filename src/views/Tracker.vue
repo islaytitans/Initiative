@@ -1,12 +1,12 @@
 <template>
   <ion-list>
     <ion-item v-for="(creature, index) in creatures" :key="index">
-      <ion-icon :name="chevronForwardOutline" />
+      <ion-icon :icon="chevronForwardOutline" />
       <ion-label>{{ creature.initiative }}</ion-label>
       <ion-label>{{ creature.name }}</ion-label>
-      <ion-icon :name="shieldOutline" />
+      <ion-icon :icon="shieldOutline" />
       <ion-label>{{ creature.armorClass }}</ion-label>
-      <ion-icon :name="heartOutline" />
+      <ion-icon :icon="heartOutline" />
       <ion-label>{{ creature.hitPoints }}</ion-label>
     </ion-item>
   </ion-list>
