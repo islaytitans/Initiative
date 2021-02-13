@@ -10,13 +10,13 @@
   </ion-modal>
   <ion-list>
     <ion-list-header>
-      Roll for Initiative
       <ion-button @click="setAddCreatureOpen(true)">
-        <ion-icon :icon="addOutline" slot="icon-only" />
+        <ion-label>Add</ion-label>
+        <ion-icon :icon="addOutline" />
       </ion-button>
     </ion-list-header>
 
-    <ion-item v-for="(creature, index) in getCreatures()" :key="index">
+    <ion-item v-for="(creature, index) in getCreatures()" :key="index" >
       <ion-icon
         :icon="chevronForwardOutline"
         :color="getStatusColor(creature.isDead)"
