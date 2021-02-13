@@ -3,7 +3,7 @@
     <ion-header>
       <ion-toolbar>
         <ion-title>Add a Creature</ion-title>
-        <ion-button slot="end" fill="clear" v-on:click="$emit('closeEvent')">
+        <ion-button slot="end" fill="clear" v-on:click="$emit('closeModal')">
           <ion-label>Close</ion-label>
         </ion-button>
       </ion-toolbar>
@@ -37,7 +37,7 @@ export default defineComponent({
     IonButton,
     AddCreatureForm
   },
-  emits: ['closeEvent'],
+  emits: ['closeModal'],
   setup() {
 
     return {};

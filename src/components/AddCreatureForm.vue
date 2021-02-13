@@ -1,25 +1,29 @@
 <template>
   <ion-grid>
     <ion-row>
-      <ion-col size="6">
+      <ion-col>
         <ion-item>
           <ion-label position="stacked">Name</ion-label>
-          <ion-input autocomplete="off"></ion-input>
+          <ion-input v-model="name" autocomplete="off"></ion-input>
         </ion-item>
       </ion-col>
-        <ion-col size="4">
-          <ion-item>
-            <ion-label position="stacked">Initiative</ion-label>
-            <ion-input
-              autocomplete="off"
-              type="number"
-              max="99"
-              min="-99"
-            ></ion-input>
-          </ion-item>
-        </ion-col>
-      <ion-col size="1">
-        <ion-button fill="clear">
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked">Initiative</ion-label>
+          <ion-input
+            v-model.number="initiative"
+            autocomplete="off"
+            type="number"
+            max="99"
+            min="-99"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block" fill="outline" v-on:click="addCreature">
+          <ion-label>{{ addButtonText }}</ion-label>
           <ion-icon :icon="checkmarkOutline"></ion-icon>
         </ion-button>
       </ion-col>
@@ -37,10 +41,8 @@ import {
   IonInput,
   IonButton,
 } from "@ionic/vue";
-import { defineComponent } from "vue";
-import {
-  checkmarkOutline
-} from "ionicons/icons";
+import { defineComponent, ref } from "vue";
+import { checkmarkOutline } from "ionicons/icons";
 
 export default defineComponent({
   name: "AddCreature",
@@ -54,8 +56,25 @@ export default defineComponent({
     IonButton,
   },
   setup() {
+    const addButtonText = ref("Add");
+    const name = ref("");
+    const initiative = ref();
+
+    function addCreature() {
+      addButtonText.value = 'Added';
+      console.log(name);
+      console.log(initiative);
+      setTimeout(() => {
+        addButtonText.value = 'Add';
+      }, 1000);
+    }
+
     return {
-      checkmarkOutline
+      addButtonText,
+      name,
+      initiative,
+      checkmarkOutline,
+      addCreature,
     };
   },
 });

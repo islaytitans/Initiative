@@ -6,7 +6,7 @@
   >
     <AddCreatureModal 
       :data="data" 
-      @closeEvent="setAddCreatureOpen(false)"></AddCreatureModal>
+      @closeModal="setAddCreatureOpen(false)"></AddCreatureModal>
   </ion-modal>
   <ion-list>
     <ion-list-header>
