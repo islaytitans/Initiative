@@ -4,7 +4,9 @@
       css-class="my-custom-class"
       @onDidDismiss="setAddCreatureOpen(false)"
   >
-    <AddCreature :data="data" @closeEvent="setAddCreatureOpen(false)"></AddCreature>
+    <AddCreatureModal 
+      :data="data" 
+      @closeEvent="setAddCreatureOpen(false)"></AddCreatureModal>
   </ion-modal>
   <ion-list>
     <ion-list-header>
@@ -67,7 +69,7 @@ import {
   skullOutline,
   addOutline,
 } from "ionicons/icons";
-import AddCreature from '@/views/AddCreature.vue';
+import AddCreatureModal from '@/components/AddCreatureModal.vue';
 import Creature from "@/types/Creature.ts";
 
 export default defineComponent({
@@ -80,7 +82,7 @@ export default defineComponent({
     IonIcon,
     IonButton,
     IonModal,
-    AddCreature
+    AddCreatureModal
   },
   setup() {
     const creatures: Creature[] = [

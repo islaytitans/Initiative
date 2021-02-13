@@ -9,9 +9,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <div id="container">
-        <h2>Add a Creature</h2>
-      </div>
+      <AddCreatureForm></AddCreatureForm>
     </ion-content>
   </ion-page>
 </template>
@@ -26,6 +24,7 @@ import {
   IonButton,
 } from "@ionic/vue";
 import { defineComponent } from "vue";
+import AddCreatureForm from '@/components/AddCreatureForm.vue';
 
 export default defineComponent({
   name: "AddCreature",
@@ -36,6 +35,7 @@ export default defineComponent({
     IonTitle,
     IonToolbar,
     IonButton,
+    AddCreatureForm
   },
   emits: ['closeEvent'],
   setup() {
