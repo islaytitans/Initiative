@@ -2,7 +2,7 @@
   <ion-list>
     <ion-list-header>
       Roll for Initiative
-      <ion-button>
+      <ion-button @click="openAddCreature">
         <ion-icon :icon="addOutline" slot="icon-only" />
       </ion-button>
     </ion-list-header>
@@ -28,7 +28,9 @@
         </p>
       </ion-label>
 
-      <ion-icon :icon="heartOutline" :color="getStatusColor(creature.isDead)" />
+      <ion-icon 
+        :icon="heartOutline" 
+        :color="getStatusColor(creature.isDead)"/>
       <ion-label :color="getStatusColor(creature.isDead)">
         {{ creature.isDead ? 0 : creature.hitPoints }} /
         {{ creature.hitPoints }}
@@ -46,6 +48,7 @@ import {
   IonLabel,
   IonIcon,
   IonButton,
+  modalController
 } from "@ionic/vue";
 import {
   heartOutline,
@@ -56,6 +59,7 @@ import {
   skullOutline,
   addOutline,
 } from "ionicons/icons";
+import AddCreature from '@/views/AddCreature.vue';
 import Creature from "@/types/Creature.ts";
 
 export default {
@@ -66,7 +70,7 @@ export default {
     IonItem,
     IonLabel,
     IonIcon,
-    IonButton,
+    IonButton
   },
   setup() {
     const creatures: Creature[] = [
@@ -122,10 +126,23 @@ export default {
       return isDead ? 'danger' : '';
     }
 
+    async function openAddCreature() {
+      const modal = await modalController
+        .create({
+          component: AddCreature,
+          cssClass: 'my-custom-class',
+          componentProps: {
+            title: 'New Title'
+          },
+        })
+      return modal.present();
+    }
+
     return {
       getCreatureIcon,
       getCreatures,
       getStatusColor,
+      openAddCreature,
       heartOutline,
       shieldOutline,
       chevronForwardOutline,
