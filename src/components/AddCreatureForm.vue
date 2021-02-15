@@ -40,6 +40,7 @@ import {
   IonLabel,
   IonInput,
   IonButton,
+  IonIcon
 } from "@ionic/vue";
 import { defineComponent, ref } from "vue";
 import { checkmarkOutline } from "ionicons/icons";
@@ -54,6 +55,7 @@ export default defineComponent({
     IonLabel,
     IonInput,
     IonButton,
+    IonIcon
   },
   setup() {
     const addButtonText = ref("Add");

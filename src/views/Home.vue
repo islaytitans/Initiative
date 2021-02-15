@@ -16,7 +16,7 @@
 <script lang="ts">
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 import { defineComponent } from 'vue';
-import Tracker from '@/views/Tracker.vue';
+import Tracker from '@/components/Tracker.vue';
 
 export default defineComponent({
   name: 'Home',

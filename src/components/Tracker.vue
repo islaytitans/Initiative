@@ -18,45 +18,9 @@
     </ion-list-header>
 
     <ion-item-sliding v-for="(creature, index) in getCreatures()" :key="index">
-      <ion-item>
-        <ion-icon
-          :icon="chevronForwardOutline"
-          :color="getStatusColor(creature.isDead)"
-        />
-        <ion-label :color="getStatusColor(creature.isDead)">
-          {{ creature.initiative }}
-        </ion-label>
-
-        <ion-icon
-          :icon="getCreatureIcon(creature.isPlayer, creature.isDead)"
-          :color="getStatusColor(creature.isDead)"
-        />
-        <ion-label :color="getStatusColor(creature.isDead)">
-          <h3>{{ creature.name }}</h3>
-          <p>
-            <ion-icon :icon="shieldOutline" />
-            {{ creature.armorClass }}
-          </p>
-        </ion-label>
-
-        <ion-icon
-          :icon="heartOutline"
-          :color="getStatusColor(creature.isDead)"
-        />
-        <ion-label :color="getStatusColor(creature.isDead)">
-          {{ creature.isDead ? 0 : creature.hitPoints }} /
-          {{ creature.hitPoints }}
-        </ion-label>
-      </ion-item>
-
-      <ion-item-options side="end" @ionSwipe="killCreature(index)">
-        <ion-item-option color="danger">
-          <ion-icon
-            :icon="skullOutline"
-            @click="killCreature(index)"
-          />
-        </ion-item-option>
-      </ion-item-options>
+      <TrackerListItem 
+        :creature="creature"
+        @killCreature="killCreature(creature)"></TrackerListItem>
     </ion-item-sliding>
   </ion-list>
 </template>
@@ -71,21 +35,13 @@ import {
   IonLabel,
   IonIcon,
   IonButton,
-  IonModal,
-  IonItem,
-  IonItemOptions,
-  IonItemOption,
+  IonModal
 } from "@ionic/vue";
 import {
-  heartOutline,
-  shieldOutline,
-  chevronForwardOutline,
-  bodyOutline,
-  pawOutline,
-  skullOutline,
   addOutline,
 } from "ionicons/icons";
 import AddCreatureModal from "@/components/AddCreatureModal.vue";
+import TrackerListItem from "@/components/TrackerListItem.vue";
 import Creature from "@/types/Creature.ts";
 
 export default defineComponent({
@@ -98,10 +54,8 @@ export default defineComponent({
     IonIcon,
     IonButton,
     IonModal,
-    IonItem,
-    IonItemOptions,
-    IonItemOption,
     AddCreatureModal,
+    TrackerListItem
   },
   setup() {
     const creatures: Creature[] = [
@@ -140,46 +94,25 @@ export default defineComponent({
     ];
 
     const isAddCreatureOpenRef = ref(false);
-    const setAddCreatureOpen = (state: boolean) =>
-      (isAddCreatureOpenRef.value = state);
     const trackerListRef = ref();
 
-    function getCreatureIcon(isPlayer: boolean, isDead: boolean): string {
-      if (isDead) {
-        return skullOutline;
-      } else if (isPlayer) {
-        return bodyOutline;
-      } else {
-        return pawOutline;
-      }
-    }
+    const setAddCreatureOpen = (state: boolean) => (isAddCreatureOpenRef.value = state);
 
     function getCreatures(): Creature[] {
       return creatures.sort((a, b) => b.initiative - a.initiative);
     }
 
-    function getStatusColor(isDead: boolean): string {
-      return isDead ? "danger" : "";
-    }
-
-    function killCreature(index: number): void {
-      console.log('Killed' + index);
-      const killedCreature = getCreatures()[index];
-      killedCreature.hitPoints = 0;
-      killedCreature.isDead = true;
+    function killCreature(creature: Creature): void {
+      console.log('Killed' + creature.name);
+      creature.hitPoints = 0;
+      creature.isDead = true;
       trackerListRef.value.$el.closeSlidingItems()
     }
 
     return {
-      getCreatureIcon,
       getCreatures,
-      getStatusColor,
       killCreature,
-      heartOutline,
-      shieldOutline,
-      chevronForwardOutline,
       addOutline,
-      skullOutline,
       isAddCreatureOpenRef,
       setAddCreatureOpen,
       trackerListRef
