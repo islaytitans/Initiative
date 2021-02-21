@@ -1,18 +1,12 @@
 <template>
   <ion-item>
-    <ion-icon
-      :icon="chevronForwardOutline"
-      :color="getStatusColor(creature.isDead)"
-    />
-    <ion-label :color="getStatusColor(creature.isDead)">
+    <ion-icon :icon="chevronForwardOutline" :color="getStatusColor" />
+    <ion-label :color="getStatusColor">
       {{ creature.initiative }}
     </ion-label>
 
-    <ion-icon
-      :icon="getCreatureIcon(creature.isPlayer, creature.isDead)"
-      :color="getStatusColor(creature.isDead)"
-    />
-    <ion-label :color="getStatusColor(creature.isDead)">
+    <ion-icon :icon="getCreatureIcon" :color="getStatusColor" />
+    <ion-label :color="getStatusColor">
       <h3>{{ creature.name }}</h3>
       <p>
         <ion-icon :icon="shieldOutline" />
@@ -20,8 +14,8 @@
       </p>
     </ion-label>
 
-    <ion-icon :icon="heartOutline" :color="getStatusColor(creature.isDead)" />
-    <ion-label :color="getStatusColor(creature.isDead)">
+    <ion-icon :icon="heartOutline" :color="getStatusColor" />
+    <ion-label :color="getStatusColor">
       {{ creature.isDead ? 0 : creature.hitPoints }} /
       {{ creature.hitPoints }}
     </ion-label>
@@ -34,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent, toRefs } from "vue";
 import {
   IonLabel,
   IonIcon,
@@ -62,21 +56,23 @@ export default defineComponent({
     IonItemOption,
   },
   props: ["creature"],
-  emits: ['killCreature'],
-  setup() {
-    function getCreatureIcon(isPlayer: boolean, isDead: boolean): string {
-      if (isDead) {
+  emits: ["killCreature"],
+  setup(props) {
+    const { creature } = toRefs(props);
+
+    const getCreatureIcon = computed((): string => {
+      if (creature.value.isDead) {
         return skullOutline;
-      } else if (isPlayer) {
+      } else if (creature.value.isPlayer) {
         return bodyOutline;
       } else {
         return pawOutline;
       }
-    }
+    });
 
-    function getStatusColor(isDead: boolean): string {
-      return isDead ? "danger" : "";
-    }
+    const getStatusColor = computed((): string => {
+      return creature.value.isDead ? "danger" : "";
+    });
 
     return {
       getCreatureIcon,
