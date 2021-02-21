@@ -7,6 +7,8 @@
           <ion-input v-model="name" autocomplete="off"></ion-input>
         </ion-item>
       </ion-col>
+    </ion-row>
+    <ion-row>
       <ion-col>
         <ion-item>
           <ion-label position="stacked">Initiative</ion-label>
@@ -15,6 +17,18 @@
             autocomplete="off"
             type="number"
             max="99"
+            min="-5"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked">Hit Points</ion-label>
+          <ion-input
+            v-model.number="hitPoints"
+            autocomplete="off"
+            type="number"
+            max="500"
             min="-99"
           ></ion-input>
         </ion-item>
@@ -64,6 +78,7 @@ export default defineComponent({
     const addButtonText = ref("Add");
     const name = ref("");
     const initiative = ref();
+    const hitPoints = ref();
     const isPlayer = ref(false);
 
     const store = useStore();
@@ -74,6 +89,7 @@ export default defineComponent({
         id: 400,
         name: name.value,
         initiative: initiative.value,
+        hitPoints: hitPoints.value,
         isPlayer: isPlayer.value,
         isDefeated: false,
       } as Creature;

@@ -12,7 +12,7 @@
   <ion-list ref="trackerListRef">
     <ion-list-header>
       <ion-button @click="setAddCreatureOpen(true)">
-        <ion-label>Add</ion-label>
+        <ion-label>Add a creature</ion-label>
         <ion-icon :icon="addOutline" />
       </ion-button>
     </ion-list-header>
