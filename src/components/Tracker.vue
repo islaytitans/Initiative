@@ -20,7 +20,7 @@
     <ion-item-sliding v-for="(creature, index) in getCreatures" :key="index">
       <TrackerListItem 
         :creature="creature"
-        @killCreature="killCreature(creature)"></TrackerListItem>
+        @defeatCreature="defeatCreature(creature)"></TrackerListItem>
     </ion-item-sliding>
   </ion-list>
 </template>
@@ -42,7 +42,6 @@ import {
 } from "ionicons/icons";
 import AddCreatureModal from "@/components/AddCreatureModal.vue";
 import TrackerListItem from "@/components/TrackerListItem.vue";
-import Creature from "@/types/Creature.ts";
 import { useStore } from '@/store/index';
 
 export default defineComponent({
@@ -68,16 +67,8 @@ export default defineComponent({
 
     const getCreatures = computed(() => store.getters.getCreatures);
 
-    function killCreature(creature: Creature): void {
-      console.log('Killed' + creature.name);
-      creature.hitPoints = 0;
-      creature.isDead = true;
-      trackerListRef.value.$el.closeSlidingItems()
-    }
-
     return {
       getCreatures,
-      killCreature,
       addOutline,
       isAddCreatureOpenRef,
       setAddCreatureOpen,

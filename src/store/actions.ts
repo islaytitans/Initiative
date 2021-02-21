@@ -5,7 +5,7 @@ import { State } from "./state";
 import { ActionContext, ActionTree } from "vuex";
 import { MutationTypes } from "./mutationTypes";
 
-type AugmentedactionContext = {
+type AugmentedActionContext = {
   commit<K extends keyof Mutations>(
     key: K,
     payload: Parameters<Mutations[K]>[1]
@@ -14,7 +14,11 @@ type AugmentedactionContext = {
 
 export interface Actions {
   [ActionTypes.SetCreatures](
-    { commit }: AugmentedactionContext,
+    { commit }: AugmentedActionContext,
+    payload: Creature
+  ): void;
+  [ActionTypes.DefreatCreature](
+    { commit }: AugmentedActionContext,
     payload: Creature
   ): void;
 }
@@ -23,4 +27,9 @@ export const actions: ActionTree<State, State> & Actions = {
   [ActionTypes.SetCreatures]({ commit }, payload: Creature) {
     commit(MutationTypes.AddCreature, payload);
   },
+  [ActionTypes.DefreatCreature]({ commit }, payload: Creature) {
+    payload.hitPoints = 0;
+    payload.isDefeated = true;
+    commit(MutationTypes.UpdateCreature, payload)
+  }
 };

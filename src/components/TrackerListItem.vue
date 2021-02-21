@@ -16,13 +16,13 @@
 
     <ion-icon :icon="heartOutline" :color="getStatusColor" />
     <ion-label :color="getStatusColor">
-      {{ creature.isDead ? 0 : creature.hitPoints }} /
+      {{ creature.isDefeated ? 0 : creature.hitPoints }} /
       {{ creature.hitPoints }}
     </ion-label>
   </ion-item>
-  <ion-item-options side="end" @ionSwipe="emit('killCreature(creature)')">
+  <ion-item-options side="end" @ionSwipe="defeatCreature(creature)">
     <ion-item-option color="danger">
-      <ion-icon :icon="skullOutline" @click="emit('killCreature(creature)')" />
+      <ion-icon :icon="skullOutline" @click="defeatCreature(creature)" />
     </ion-item-option>
   </ion-item-options>
 </template>
@@ -45,6 +45,9 @@ import {
   skullOutline,
   addOutline,
 } from "ionicons/icons";
+import Creature from "@/types/Creature.ts";
+import { useStore } from '@/store/index';
+import { ActionTypes } from '@/store/actionTypes';
 
 export default defineComponent({
   name: "TrackerListItem",
@@ -56,12 +59,12 @@ export default defineComponent({
     IonItemOption,
   },
   props: ["creature"],
-  emits: ["killCreature"],
+  //emits: ["closeSlidingItems"],
   setup(props) {
     const { creature } = toRefs(props);
 
     const getCreatureIcon = computed((): string => {
-      if (creature.value.isDead) {
+      if (creature.value.isDefeated) {
         return skullOutline;
       } else if (creature.value.isPlayer) {
         return bodyOutline;
@@ -71,12 +74,21 @@ export default defineComponent({
     });
 
     const getStatusColor = computed((): string => {
-      return creature.value.isDead ? "danger" : "";
+      return creature.value.isDefeated ? "danger" : "";
     });
+
+    const store = useStore();
+
+    function defeatCreature(creature: Creature): void {
+      console.log('Defeated' + creature.name);
+      store.dispatch(ActionTypes.DefreatCreature, creature);
+      //trackerListRef.value.$el.closeSlidingItems()
+    }
 
     return {
       getCreatureIcon,
       getStatusColor,
+      defeatCreature,
       heartOutline,
       shieldOutline,
       chevronForwardOutline,
