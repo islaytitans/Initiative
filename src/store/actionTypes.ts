@@ -1,4 +1,4 @@
 export enum ActionTypes {
-  SetCreatures = "SetCreatures",
+  AddCreature = "AddCreature",
   DefreatCreature = "DefeatCreature"
 }

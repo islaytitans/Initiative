@@ -13,7 +13,7 @@ type AugmentedActionContext = {
 } & Omit<ActionContext<State, State>, "commit">;
 
 export interface Actions {
-  [ActionTypes.SetCreatures](
+  [ActionTypes.AddCreature](
     { commit }: AugmentedActionContext,
     payload: Creature
   ): void;
@@ -24,7 +24,7 @@ export interface Actions {
 }
 
 export const actions: ActionTree<State, State> & Actions = {
-  [ActionTypes.SetCreatures]({ commit }, payload: Creature) {
+  [ActionTypes.AddCreature]({ commit }, payload: Creature) {
     commit(MutationTypes.AddCreature, payload);
   },
   [ActionTypes.DefreatCreature]({ commit }, payload: Creature) {

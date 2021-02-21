@@ -9,19 +9,19 @@
       <ion-icon :icon="getCreatureIcon" :color="getStatusColor" />
       <ion-label :color="getStatusColor">
         <h3>{{ creature.name }}</h3>
-        <p>
+        <p v-if="creature.armorClass">
           <ion-icon :icon="shieldOutline" />
           {{ creature.armorClass }}
         </p>
       </ion-label>
 
-      <ion-icon :icon="heartOutline" :color="getStatusColor" />
-      <ion-label :color="getStatusColor">
+      <ion-icon :icon="heartOutline" :color="getStatusColor" v-if="creature.hitPoints" />
+      <ion-label :color="getStatusColor" v-if="creature.hitPoints">
         {{ creature.isDefeated ? 0 : creature.hitPoints }} /
         {{ creature.hitPoints }}
       </ion-label>
     </ion-item>
-    
+
     <ion-item-options side="end" @ionSwipe="defeatCreature(creature)">
       <ion-item-option color="danger">
         <ion-icon :icon="skullOutline" @click="defeatCreature(creature)" />

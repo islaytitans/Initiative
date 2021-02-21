@@ -40,10 +40,13 @@ import {
   IonLabel,
   IonInput,
   IonButton,
-  IonIcon
+  IonIcon,
 } from "@ionic/vue";
 import { defineComponent, ref } from "vue";
 import { checkmarkOutline } from "ionicons/icons";
+import { useStore } from "@/store/index";
+import { ActionTypes } from "@/store/actionTypes";
+import Creature from "@/types/Creature";
 
 export default defineComponent({
   name: "AddCreature",
@@ -55,19 +58,28 @@ export default defineComponent({
     IonLabel,
     IonInput,
     IonButton,
-    IonIcon
+    IonIcon,
   },
   setup() {
     const addButtonText = ref("Add");
     const name = ref("");
     const initiative = ref();
+    const isPlayer = ref(false);
+
+    const store = useStore();
 
     function addCreature() {
-      addButtonText.value = 'Added';
-      console.log(name);
-      console.log(initiative);
+      addButtonText.value = "Added";
+      const creature = {
+        id: 400,
+        name: name.value,
+        initiative: initiative.value,
+        isPlayer: isPlayer.value,
+        isDefeated: false,
+      } as Creature;
+      store.dispatch(ActionTypes.AddCreature, creature);
       setTimeout(() => {
-        addButtonText.value = 'Add';
+        addButtonText.value = "Add";
       }, 1000);
     }
 
