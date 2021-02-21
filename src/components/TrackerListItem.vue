@@ -1,30 +1,33 @@
 <template>
-  <ion-item>
-    <ion-icon :icon="chevronForwardOutline" :color="getStatusColor" />
-    <ion-label :color="getStatusColor">
-      {{ creature.initiative }}
-    </ion-label>
+  <ion-item-sliding>
+    <ion-item>
+      <ion-icon :icon="chevronForwardOutline" :color="getStatusColor" />
+      <ion-label :color="getStatusColor">
+        {{ creature.initiative }}
+      </ion-label>
 
-    <ion-icon :icon="getCreatureIcon" :color="getStatusColor" />
-    <ion-label :color="getStatusColor">
-      <h3>{{ creature.name }}</h3>
-      <p>
-        <ion-icon :icon="shieldOutline" />
-        {{ creature.armorClass }}
-      </p>
-    </ion-label>
+      <ion-icon :icon="getCreatureIcon" :color="getStatusColor" />
+      <ion-label :color="getStatusColor">
+        <h3>{{ creature.name }}</h3>
+        <p>
+          <ion-icon :icon="shieldOutline" />
+          {{ creature.armorClass }}
+        </p>
+      </ion-label>
 
-    <ion-icon :icon="heartOutline" :color="getStatusColor" />
-    <ion-label :color="getStatusColor">
-      {{ creature.isDefeated ? 0 : creature.hitPoints }} /
-      {{ creature.hitPoints }}
-    </ion-label>
-  </ion-item>
-  <ion-item-options side="end" @ionSwipe="defeatCreature(creature)">
-    <ion-item-option color="danger">
-      <ion-icon :icon="skullOutline" @click="defeatCreature(creature)" />
-    </ion-item-option>
-  </ion-item-options>
+      <ion-icon :icon="heartOutline" :color="getStatusColor" />
+      <ion-label :color="getStatusColor">
+        {{ creature.isDefeated ? 0 : creature.hitPoints }} /
+        {{ creature.hitPoints }}
+      </ion-label>
+    </ion-item>
+    
+    <ion-item-options side="end" @ionSwipe="defeatCreature(creature)">
+      <ion-item-option color="danger">
+        <ion-icon :icon="skullOutline" @click="defeatCreature(creature)" />
+      </ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
 </template>
 
 <script lang="ts">
@@ -35,6 +38,7 @@ import {
   IonItem,
   IonItemOptions,
   IonItemOption,
+  IonItemSliding,
 } from "@ionic/vue";
 import {
   heartOutline,
@@ -46,8 +50,8 @@ import {
   addOutline,
 } from "ionicons/icons";
 import Creature from "@/types/Creature.ts";
-import { useStore } from '@/store/index';
-import { ActionTypes } from '@/store/actionTypes';
+import { useStore } from "@/store/index";
+import { ActionTypes } from "@/store/actionTypes";
 
 export default defineComponent({
   name: "TrackerListItem",
@@ -57,6 +61,7 @@ export default defineComponent({
     IonItem,
     IonItemOptions,
     IonItemOption,
+    IonItemSliding
   },
   props: ["creature"],
   //emits: ["closeSlidingItems"],
@@ -80,7 +85,7 @@ export default defineComponent({
     const store = useStore();
 
     function defeatCreature(creature: Creature): void {
-      console.log('Defeated' + creature.name);
+      console.log("Defeated" + creature.name);
       store.dispatch(ActionTypes.DefreatCreature, creature);
       //trackerListRef.value.$el.closeSlidingItems()
     }

@@ -17,11 +17,12 @@
       </ion-button>
     </ion-list-header>
 
-    <ion-item-sliding v-for="(creature, index) in getCreatures" :key="index">
-      <TrackerListItem 
-        :creature="creature"
-        @defeatCreature="defeatCreature(creature)"></TrackerListItem>
-    </ion-item-sliding>
+    <TrackerListItem
+      v-for="(creature, index) in getCreatures"
+      :key="index"
+      :creature="creature"
+      @defeatCreature="defeatCreature(creature)"
+    ></TrackerListItem>
   </ion-list>
 </template>
 
@@ -31,37 +32,34 @@ import { defineComponent, computed, ref } from "vue";
 import {
   IonListHeader,
   IonList,
-  IonItemSliding,
   IonLabel,
   IonIcon,
   IonButton,
-  IonModal
+  IonModal,
 } from "@ionic/vue";
-import {
-  addOutline,
-} from "ionicons/icons";
+import { addOutline } from "ionicons/icons";
 import AddCreatureModal from "@/components/AddCreatureModal.vue";
 import TrackerListItem from "@/components/TrackerListItem.vue";
-import { useStore } from '@/store/index';
+import { useStore } from "@/store/index";
 
 export default defineComponent({
   name: "Tracker",
   components: {
     IonList,
     IonListHeader,
-    IonItemSliding,
     IonLabel,
     IonIcon,
     IonButton,
     IonModal,
     AddCreatureModal,
-    TrackerListItem
+    TrackerListItem,
   },
   setup() {
     const isAddCreatureOpenRef = ref(false);
     const trackerListRef = ref();
 
-    const setAddCreatureOpen = (state: boolean) => (isAddCreatureOpenRef.value = state);
+    const setAddCreatureOpen = (state: boolean) =>
+      (isAddCreatureOpenRef.value = state);
 
     const store = useStore();
 
@@ -72,7 +70,7 @@ export default defineComponent({
       addOutline,
       isAddCreatureOpenRef,
       setAddCreatureOpen,
-      trackerListRef
+      trackerListRef,
     };
   },
 });
