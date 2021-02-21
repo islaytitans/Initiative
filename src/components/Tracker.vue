@@ -17,7 +17,7 @@
       </ion-button>
     </ion-list-header>
 
-    <ion-item-sliding v-for="(creature, index) in getCreatures()" :key="index">
+    <ion-item-sliding v-for="(creature, index) in getCreatures" :key="index">
       <TrackerListItem 
         :creature="creature"
         @killCreature="killCreature(creature)"></TrackerListItem>
@@ -27,7 +27,7 @@
 
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, computed, ref } from "vue";
 import {
   IonListHeader,
   IonList,
@@ -43,6 +43,7 @@ import {
 import AddCreatureModal from "@/components/AddCreatureModal.vue";
 import TrackerListItem from "@/components/TrackerListItem.vue";
 import Creature from "@/types/Creature.ts";
+import { useStore } from '@/store/index';
 
 export default defineComponent({
   name: "Tracker",
@@ -58,49 +59,14 @@ export default defineComponent({
     TrackerListItem
   },
   setup() {
-    const creatures: Creature[] = [
-      {
-        isPlayer: true,
-        isDead: false,
-        name: "Teth",
-        initiative: 10,
-        armorClass: 15,
-        hitPoints: 40,
-      },
-      {
-        isPlayer: true,
-        isDead: false,
-        name: "Regis",
-        initiative: 5,
-        armorClass: 19,
-        hitPoints: 30,
-      },
-      {
-        isPlayer: true,
-        isDead: true,
-        name: "Cicero",
-        initiative: 20,
-        armorClass: 16,
-        hitPoints: 45,
-      },
-      {
-        isPlayer: false,
-        isDead: false,
-        name: "Koios",
-        initiative: 21,
-        armorClass: 19,
-        hitPoints: 81,
-      },
-    ];
-
     const isAddCreatureOpenRef = ref(false);
     const trackerListRef = ref();
 
     const setAddCreatureOpen = (state: boolean) => (isAddCreatureOpenRef.value = state);
 
-    function getCreatures(): Creature[] {
-      return creatures.sort((a, b) => b.initiative - a.initiative);
-    }
+    const store = useStore();
+
+    const getCreatures = computed(() => store.getters.getCreatures);
 
     function killCreature(creature: Creature): void {
       console.log('Killed' + creature.name);
