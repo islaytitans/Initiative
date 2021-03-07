@@ -24,6 +24,7 @@
 
     <ion-item-options side="end" @ionSwipe="defeatCreature(creature)">
       <ion-item-option color="danger">
+        <ion-icon :icon="trashOutline" @click="removeCreature(creature)" />
         <ion-icon :icon="skullOutline" @click="defeatCreature(creature)" />
       </ion-item-option>
     </ion-item-options>
@@ -48,6 +49,7 @@ import {
   pawOutline,
   skullOutline,
   addOutline,
+  trashOutline
 } from "ionicons/icons";
 import Creature from "@/types/Creature.ts";
 import { useStore } from "@/store/index";
@@ -85,20 +87,27 @@ export default defineComponent({
     const store = useStore();
 
     function defeatCreature(creature: Creature): void {
-      console.log("Defeated" + creature.name);
+      console.log("Defeated - " + creature.name);
       store.dispatch(ActionTypes.DefreatCreature, creature);
       //trackerListRef.value.$el.closeSlidingItems()
+    }
+
+    function removeCreature(creature: Creature): void {
+      console.log("Removed - ", creature.name);
+      store.dispatch(ActionTypes.RemoveCreature, creature.id);
     }
 
     return {
       getCreatureIcon,
       getStatusColor,
       defeatCreature,
+      removeCreature,
       heartOutline,
       shieldOutline,
       chevronForwardOutline,
       addOutline,
       skullOutline,
+      trashOutline
     };
   },
 });

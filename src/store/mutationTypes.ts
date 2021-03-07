@@ -1,4 +1,5 @@
 export enum MutationTypes {
   AddCreature = "AddCreature",
-  UpdateCreature = "UpdateCreature"
+  UpdateCreature = "UpdateCreature",
+  RemoveCreature = "RemoveCreature",
 }

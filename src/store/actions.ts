@@ -21,6 +21,10 @@ export interface Actions {
     { commit }: AugmentedActionContext,
     payload: Creature
   ): void;
+  [ActionTypes.RemoveCreature](
+    { commit }: AugmentedActionContext,
+    payload: number
+  ): void;
 }
 
 export const actions: ActionTree<State, State> & Actions = {
@@ -31,5 +35,8 @@ export const actions: ActionTree<State, State> & Actions = {
     payload.hitPoints = 0;
     payload.isDefeated = true;
     commit(MutationTypes.UpdateCreature, payload)
+  },
+  [ActionTypes.RemoveCreature]({ commit }, payload: number) {
+    commit(MutationTypes.RemoveCreature, payload);
   }
 };

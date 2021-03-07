@@ -6,6 +6,7 @@ import { MutationTree } from "vuex";
 export type Mutations<S = State> = {
   [MutationTypes.AddCreature](state: S, payload: Creature): void;
   [MutationTypes.UpdateCreature](state: S, payload: Creature): void;
+  [MutationTypes.RemoveCreature](state: S, payload: number): void;
 };
 
 export const mutations: MutationTree<State> & Mutations = {
@@ -13,9 +14,20 @@ export const mutations: MutationTree<State> & Mutations = {
     state.creatures.push(payload);
   },
   [MutationTypes.UpdateCreature](state: State, payload: Creature) {
-    let creatureToUpdate: Creature | undefined = state.creatures.find(c => c.id === payload.id);
+    let creatureToUpdate: Creature | undefined = state.creatures.find(
+      (c) => c.id === payload.id
+    );
     if (creatureToUpdate !== undefined) {
       creatureToUpdate = payload;
     }
-  }
+  },
+  [MutationTypes.RemoveCreature](state: State, payload: number) {
+    const creature = state.creatures.find((c) => c.id === payload);
+    if (creature) {
+      const index = state.creatures.indexOf(creature);
+      if (index > -1) {
+        state.creatures.splice(index, 1);
+      }
+    }
+  },
 };
