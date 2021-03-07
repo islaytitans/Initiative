@@ -8,7 +8,7 @@ import { MutationTypes } from "./mutationTypes";
 type AugmentedActionContext = {
   commit<K extends keyof Mutations>(
     key: K,
-    payload: Parameters<Mutations[K]>[1]
+    payload: Parameters<Mutations[K]>[1] | undefined
   ): ReturnType<Mutations[K]>;
 } & Omit<ActionContext<State, State>, "commit">;
 
@@ -25,6 +25,10 @@ export interface Actions {
     { commit }: AugmentedActionContext,
     payload: number
   ): void;
+  [ActionTypes.RemoveCreatures](
+    { commit }: AugmentedActionContext,
+    payload: Array<Creature> | undefined
+  ): void;
 }
 
 export const actions: ActionTree<State, State> & Actions = {
@@ -38,5 +42,8 @@ export const actions: ActionTree<State, State> & Actions = {
   },
   [ActionTypes.RemoveCreature]({ commit }, payload: number) {
     commit(MutationTypes.RemoveCreature, payload);
+  },
+  [ActionTypes.RemoveCreatures]({ commit }, payload: Array<Creature> | undefined) {
+    commit(MutationTypes.RemoveCreatures, payload);
   }
 };

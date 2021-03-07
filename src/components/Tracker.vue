@@ -5,15 +5,18 @@
     @onDidDismiss="setAddCreatureOpen(false)"
   >
     <AddCreatureModal
-      :data="data"
       @closeModal="setAddCreatureOpen(false)"
     ></AddCreatureModal>
   </ion-modal>
   <ion-list ref="trackerListRef">
     <ion-list-header>
       <ion-button @click="setAddCreatureOpen(true)">
-        <ion-label>Add a creature</ion-label>
         <ion-icon :icon="addOutline" />
+        <ion-label>Add a creature</ion-label>
+      </ion-button>
+      <ion-button @click="removeCreatures()">
+        <ion-icon :icon="trashOutline" />
+        <ion-label>Remove all</ion-label>
       </ion-button>
     </ion-list-header>
 
@@ -21,7 +24,6 @@
       v-for="(creature, index) in getCreatures"
       :key="index"
       :creature="creature"
-      @defeatCreature="defeatCreature(creature)"
     ></TrackerListItem>
   </ion-list>
 </template>
@@ -37,10 +39,11 @@ import {
   IonButton,
   IonModal,
 } from "@ionic/vue";
-import { addOutline } from "ionicons/icons";
+import { addOutline, trashOutline } from "ionicons/icons";
 import AddCreatureModal from "@/components/AddCreatureModal.vue";
 import TrackerListItem from "@/components/TrackerListItem.vue";
 import { useStore } from "@/store/index";
+import { ActionTypes } from "@/store/actionTypes";
 
 export default defineComponent({
   name: "Tracker",
@@ -65,11 +68,18 @@ export default defineComponent({
 
     const getCreatures = computed(() => store.getters.getCreatures);
 
+    function removeCreatures(): void {
+      console.log("Removed creatures");
+      store.dispatch(ActionTypes.RemoveCreatures, undefined);
+    }
+
     return {
       getCreatures,
       addOutline,
+      trashOutline,
       isAddCreatureOpenRef,
       setAddCreatureOpen,
+      removeCreatures,
       trackerListRef,
     };
   },

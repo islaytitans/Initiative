@@ -36,9 +36,9 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-button expand="block" fill="outline" v-on:click="addCreature">
-          <ion-label>{{ addButtonText }}</ion-label>
+        <ion-button expand="block" fill="outline" :color="addButtonColour" v-on:click="addCreature">
           <ion-icon :icon="checkmarkOutline"></ion-icon>
+          <ion-label>{{ addButtonText }}</ion-label>
         </ion-button>
       </ion-col>
     </ion-row>
@@ -76,6 +76,7 @@ export default defineComponent({
   },
   setup() {
     const addButtonText = ref("Add");
+    const addButtonColour = ref("");
     const name = ref("");
     const initiative = ref();
     const hitPoints = ref();
@@ -85,6 +86,7 @@ export default defineComponent({
 
     function addCreature() {
       addButtonText.value = "Added";
+      addButtonColour.value = "success";
       const creature = {
         id: 400,
         name: name.value,
@@ -96,13 +98,16 @@ export default defineComponent({
       store.dispatch(ActionTypes.AddCreature, creature);
       setTimeout(() => {
         addButtonText.value = "Add";
-      }, 1000);
+        addButtonColour.value = "";
+      }, 1250);
     }
 
     return {
       addButtonText,
+      addButtonColour,
       name,
       initiative,
+      hitPoints,
       checkmarkOutline,
       addCreature,
     };
