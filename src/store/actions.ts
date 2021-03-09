@@ -29,6 +29,10 @@ export interface Actions {
     { commit }: AugmentedActionContext,
     payload: Array<Creature> | undefined
   ): void;
+  [ActionTypes.ChangeCreatureHitPoints](
+    { commit }: AugmentedActionContext,
+    payload: Creature
+  ): void;
 }
 
 export const actions: ActionTree<State, State> & Actions = {
@@ -38,12 +42,21 @@ export const actions: ActionTree<State, State> & Actions = {
   [ActionTypes.DefreatCreature]({ commit }, payload: Creature) {
     payload.hitPoints = 0;
     payload.isDefeated = true;
-    commit(MutationTypes.UpdateCreature, payload)
+    commit(MutationTypes.UpdateCreature, payload);
   },
   [ActionTypes.RemoveCreature]({ commit }, payload: number) {
     commit(MutationTypes.RemoveCreature, payload);
   },
   [ActionTypes.RemoveCreatures]({ commit }, payload: Array<Creature> | undefined) {
     commit(MutationTypes.RemoveCreatures, payload);
+  },
+  [ActionTypes.ChangeCreatureHitPoints]({ commit }, payload: Creature) {
+    if (!payload || !payload.hitPoints) {
+      return;
+    }
+    if (payload.hitPoints < 1) {
+      payload.isDefeated = true;
+    } 
+    commit(MutationTypes.UpdateCreature, payload);
   }
 };

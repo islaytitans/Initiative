@@ -1,13 +1,14 @@
 <template>
   <ion-item-sliding>
+    <ion-list>
     <ion-item>
-      <ion-icon :icon="chevronForwardOutline" :color="getStatusColor" />
-      <ion-label :color="getStatusColor">
+      <ion-icon :icon="chevronForwardOutline" :color="statusColor" />
+      <ion-label :color="statusColor">
         {{ creature.initiative }}
       </ion-label>
 
-      <ion-icon :icon="getCreatureIcon" :color="getStatusColor" />
-      <ion-label :color="getStatusColor">
+      <ion-icon :icon="creatureIcon" :color="statusColor" />
+      <ion-label :color="statusColor">
         <h3>{{ creature.name }}</h3>
         <p v-if="creature.armorClass">
           <ion-icon :icon="shieldOutline" />
@@ -15,12 +16,17 @@
         </p>
       </ion-label>
 
-      <ion-icon :icon="heartOutline" :color="getStatusColor" v-if="creature.hitPoints" />
-      <ion-label :color="getStatusColor" v-if="creature.hitPoints">
-        {{ creature.isDefeated ? 0 : creature.hitPoints }} /
-        {{ creature.hitPoints }}
+      <ion-icon :icon="heartOutline" :color="statusColor" v-if="creature.hitPoints" />
+      <ion-label :color="statusColor" v-if="creature.hitPoints">
+        {{ creature.isDefeated ? 0 : creature.hitPoints }}
       </ion-label>
+      
     </ion-item>
+    <ion-item>
+      <ion-label>Hit Points</ion-label>
+      <ion-input type="number" v-model.number="hitPoints"></ion-input>
+    </ion-item>
+  </ion-list>
 
     <ion-item-options side="end" @ionSwipe="defeatCreature(creature)">
       <ion-item-option color="danger">
@@ -32,7 +38,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, toRefs } from "vue";
+import { computed, defineComponent, ref, toRefs, watch } from "vue";
 import {
   IonLabel,
   IonIcon,
@@ -40,6 +46,7 @@ import {
   IonItemOptions,
   IonItemOption,
   IonItemSliding,
+  IonInput
 } from "@ionic/vue";
 import {
   heartOutline,
@@ -63,14 +70,16 @@ export default defineComponent({
     IonItem,
     IonItemOptions,
     IonItemOption,
-    IonItemSliding
+    IonItemSliding,
+    IonInput
   },
   props: ["creature"],
   //emits: ["closeSlidingItems"],
   setup(props) {
     const { creature } = toRefs(props);
+    const hitPoints = ref(creature.value.hitPoints);
 
-    const getCreatureIcon = computed((): string => {
+    const creatureIcon = computed((): string => {
       if (creature.value.isDefeated) {
         return skullOutline;
       } else if (creature.value.isPlayer) {
@@ -80,7 +89,7 @@ export default defineComponent({
       }
     });
 
-    const getStatusColor = computed((): string => {
+    const statusColor = computed((): string => {
       return creature.value.isDefeated ? "danger" : "";
     });
 
@@ -97,9 +106,16 @@ export default defineComponent({
       store.dispatch(ActionTypes.RemoveCreature, creature.id);
     }
 
+    watch(hitPoints, (hitPoints: number, prevHitPoints: number) => {
+      console.log("Hit points changed - " + hitPoints + ". Previous - " + prevHitPoints);
+      creature.value.hitPoints = hitPoints;
+      store.dispatch(ActionTypes.ChangeCreatureHitPoints, creature.value);
+    });
+
     return {
-      getCreatureIcon,
-      getStatusColor,
+      hitPoints,
+      creatureIcon,
+      statusColor,
       defeatCreature,
       removeCreature,
       heartOutline,
