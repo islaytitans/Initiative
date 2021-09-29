@@ -58,7 +58,7 @@ import {
   addOutline,
   trashOutline
 } from "ionicons/icons";
-import Creature from "@/types/Creature.ts";
+import Creature from "@/types/Creature";
 import { useStore } from "@/store/index";
 import { ActionTypes } from "@/store/actionTypes";
 
