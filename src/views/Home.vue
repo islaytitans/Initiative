@@ -2,7 +2,7 @@
   <ion-page>
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-title><h1>Roll for initiative!</h1></ion-title>
+        <ion-title><h1>Roll for initiative!!</h1></ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content> 

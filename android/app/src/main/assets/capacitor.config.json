@@ -1,0 +1,17 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "Initiative",
+	"bundledWebRuntime": false,
+	"npmClient": "npm",
+	"webDir": "dist",
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 0
+		}
+	},
+	"cordova": {},
+	"server": {
+		"url": "http://localhost:8100",
+		"originalUrl": "http://localhost:8100"
+	}
+}
