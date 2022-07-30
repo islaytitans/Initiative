@@ -36,7 +36,12 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-button expand="block" fill="outline" :color="addButtonColour" v-on:click="addCreature">
+        <ion-button
+          expand="block"
+          fill="outline"
+          :color="addButtonColour"
+          v-on:click="addCreature"
+        >
           <ion-icon :icon="checkmarkOutline"></ion-icon>
           <ion-label>{{ addButtonText }}</ion-label>
         </ion-button>
@@ -87,10 +92,14 @@ export default defineComponent({
     function addCreature() {
       addButtonText.value = "Added";
       addButtonColour.value = "success";
+      let init;
+      if (!initiative.value) {
+        init = Math.floor(Math.random() * (20 - 1 + 1) + 1);
+      }
       const creature = {
         id: 400,
         name: name.value,
-        initiative: initiative.value,
+        initiative: init,
         hitPoints: hitPoints.value,
         isPlayer: isPlayer.value,
         isDefeated: false,
@@ -115,5 +124,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
