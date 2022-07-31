@@ -39,6 +39,6 @@ export type Store = Omit<
   ): ReturnType<Actions[K]>;
 };
 
-export function useStore() {
+export function useStore(): Store {
   return store as Store;
 }

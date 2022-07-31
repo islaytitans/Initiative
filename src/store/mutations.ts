@@ -38,6 +38,18 @@ export const mutations: MutationTree<State> & Mutations = {
     state: State,
     payload: Array<Creature> | undefined
   ) {
-    state.creatures.splice(0, state.creatures.length);
+    if (!payload) {
+      state.creatures.splice(0, state.creatures.length);
+    } else {
+      payload.map((p) => {
+        const creature = state.creatures.find((c) => c.id === p.id);
+        if (creature) {
+          const index = state.creatures.indexOf(creature);
+          if (index > -1) {
+            state.creatures.splice(index, 1);
+          }
+        }
+      });
+    }
   },
 };
