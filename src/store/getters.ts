@@ -12,6 +12,6 @@ export const getters: GetterTree<State, State> & Getters = {
     return state.creatures.sort((a, b) => b.initiative - a.initiative);
   },
   getCreature: (state, id) => {
-    return state.creatures.find(c => c.id === id)
-  }
+    return state.creatures.find((c) => c.id === id);
+  },
 };

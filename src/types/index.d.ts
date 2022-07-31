@@ -1,6 +1,6 @@
-import { Store } from '@/store/index';
+import { Store } from "@/store/index";
 
-declare module '@vue/runtime-core' {
+declare module "@vue/runtime-core" {
   interface ComponentCustomProperties {
     $store: Store;
   }

@@ -28,7 +28,6 @@
   </ion-list>
 </template>
 
-
 <script lang="ts">
 import { defineComponent, computed, ref } from "vue";
 import {
@@ -86,5 +85,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

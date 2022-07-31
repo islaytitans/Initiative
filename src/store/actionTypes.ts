@@ -3,5 +3,5 @@ export enum ActionTypes {
   DefreatCreature = "DefeatCreature",
   RemoveCreature = "RemoveCreature",
   RemoveCreatures = "RemoveCreatures",
-  ChangeCreatureHitPoints = "ChangeCreatureHitPoints"
+  ChangeCreatureHitPoints = "ChangeCreatureHitPoints",
 }

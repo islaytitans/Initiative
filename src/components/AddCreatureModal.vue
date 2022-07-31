@@ -24,7 +24,7 @@ import {
   IonButton,
 } from "@ionic/vue";
 import { defineComponent } from "vue";
-import AddCreatureForm from '@/components/AddCreatureForm.vue';
+import AddCreatureForm from "@/components/AddCreatureForm.vue";
 
 export default defineComponent({
   name: "AddCreature",
@@ -35,15 +35,13 @@ export default defineComponent({
     IonTitle,
     IonToolbar,
     IonButton,
-    AddCreatureForm
+    AddCreatureForm,
   },
-  emits: ['closeModal'],
+  emits: ["closeModal"],
   setup() {
-
     return {};
   },
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

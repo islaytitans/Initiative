@@ -7,7 +7,10 @@ export type Mutations<S = State> = {
   [MutationTypes.AddCreature](state: S, payload: Creature): void;
   [MutationTypes.UpdateCreature](state: S, payload: Creature): void;
   [MutationTypes.RemoveCreature](state: S, payload: number): void;
-  [MutationTypes.RemoveCreatures](state: S, payload: Array<Creature> | undefined): void;
+  [MutationTypes.RemoveCreatures](
+    state: S,
+    payload: Array<Creature> | undefined
+  ): void;
 };
 
 export const mutations: MutationTree<State> & Mutations = {
@@ -31,7 +34,10 @@ export const mutations: MutationTree<State> & Mutations = {
       }
     }
   },
-  [MutationTypes.RemoveCreatures](state: State, payload: Array<Creature> | undefined) {
+  [MutationTypes.RemoveCreatures](
+    state: State,
+    payload: Array<Creature> | undefined
+  ) {
     state.creatures.splice(0, state.creatures.length);
-  }
+  },
 };

@@ -5,7 +5,7 @@
         <ion-title><h1>Roll for initiative!</h1></ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content> 
+    <ion-content>
       <div id="container">
         <tracker></tracker>
       </div>
@@ -14,27 +14,33 @@
 </template>
 
 <script lang="ts">
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-import { defineComponent } from 'vue';
-import Tracker from '@/components/Tracker.vue';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/vue";
+import { defineComponent } from "vue";
+import Tracker from "@/components/Tracker.vue";
 
 export default defineComponent({
-  name: 'Home',
+  name: "Home",
   components: {
     IonContent,
     IonHeader,
     IonPage,
     IonTitle,
     IonToolbar,
-    Tracker
-  }
+    Tracker,
+  },
 });
 </script>
 
 <style scoped>
 #container {
   text-align: center;
-  
+
   position: absolute;
   left: 0;
   right: 0;
@@ -50,9 +56,9 @@ export default defineComponent({
 #container p {
   font-size: 16px;
   line-height: 22px;
-  
+
   color: #8c8c8c;
-  
+
   margin: 0;
 }
 
