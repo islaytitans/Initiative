@@ -33,7 +33,12 @@
 
     <ion-item-options side="end" @ionSwipe="defeatCreature(creature)">
       <ion-item-option color="danger">
-        <ion-icon :icon="trashOutline" @click="removeCreature(creature)" />
+        <ion-icon
+          slot="top"
+          :icon="trashOutline"
+          @click="removeCreature(creature)"
+        />
+        Remove
       </ion-item-option>
     </ion-item-options>
   </ion-item-sliding>
@@ -98,13 +103,13 @@ export default defineComponent({
     const store = useStore();
 
     function defeatCreature(creature: Creature): void {
-      console.log("Defeated - " + creature.name);
+      console.log(`Defeated - ${creature.id}`);
       store.dispatch(ActionTypes.DefreatCreature, creature);
       //trackerListRef.value.$el.closeSlidingItems()
     }
 
     function removeCreature(creature: Creature): void {
-      console.log("Removed - ", creature.name);
+      console.log(`Removed - ${creature.id}`);
       store.dispatch(ActionTypes.RemoveCreature, creature.id);
     }
 

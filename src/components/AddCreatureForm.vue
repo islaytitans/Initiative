@@ -97,7 +97,7 @@ export default defineComponent({
         init = Math.floor(Math.random() * (20 - 1 + 1) + 1);
       }
       const creature = {
-        id: 400,
+        id: Math.floor(Math.random() * (10000000 - 1 + 1) + 1),
         name: name.value,
         initiative: init,
         hitPoints: hitPoints.value,
