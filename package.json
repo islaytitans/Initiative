@@ -14,9 +14,9 @@
   "dependencies": {
     "@capacitor/android": "4.0.1",
     "@capacitor/core": "4.0.1",
-    "@ionic/vue": "^5.8.1",
-    "@ionic/vue-router": "^5.8.1",
-    "core-js": "^3.18.1",
+    "@ionic/vue": "^6.2.0",
+    "@ionic/vue-router": "^6.2.0",
+    "core-js": "^3.24.1",
     "ionicons": "^5.5.3",
     "vue": "^3.0.0-0",
     "vue-router": "^4.0.0-0",
